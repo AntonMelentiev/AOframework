@@ -41,6 +41,11 @@ class PythonPage(BasePage):
     def search_text(self, text: str):
         self._search_input.send_keys(text)
         self._submit_button.submit()
+        WebDriverWait(driver=self.driver, timeout=self.timeout).until(
+            expected_conditions.text_to_be_present_in_element(
+                locator=(By.XPATH, '//*[@id="search-results"]/h2'), text_="Search Results"
+            )
+        )
 
     @allure.step
     def get_text_after_search(self):
@@ -55,11 +60,6 @@ class PythonPage(BasePage):
 
     @allure.step
     def get_number_of_results(self):
-        WebDriverWait(driver=self.driver, timeout=self.timeout).until(
-            expected_conditions.text_to_be_present_in_element(
-                locator=(By.XPATH, '//*[@id="search-results"]/h2'), text_="Search Results"
-            )
-        )
         results_list = self.driver.find_element_by_class_name("search")
         links = results_list.find_elements_by_tag_name("a")
         return len(links)
