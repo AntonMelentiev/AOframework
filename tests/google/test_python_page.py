@@ -27,7 +27,7 @@ def test_python_page__text_input__first_result_link_correct(step):
     [
         ("builtin", 69),
         ("adsfadsfdasfasdf", 0),
-    ]
+    ],
 )
 def test_python_page__text_input__number_of_results_correspond_to_text(step, txt_to_search, expected_results_num):
     step.page.python.open()
