@@ -4,22 +4,28 @@ from pages.google_page import GooglePage
 from pages.python_page import PythonPage
 
 
+pages = {
+    "google": GooglePage,
+    "python": PythonPage,
+}
+
+
 class Page:
+    google: GooglePage
+    python: PythonPage
+
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self._google = None
-        self._python = None
 
-    @property
-    def google(self):
-        if self._google is None:
-            self._google = GooglePage(driver=self.driver)
+        for page in pages:
+            setattr(self.__class__, f"_{page}", None)
+            self._set_page_getter(page)
 
-        return self._google
+    def _set_page_getter(self, name):
+        setattr(self.__class__, name, property(fget=lambda self: self._get_page(name)))
 
-    @property
-    def python(self):
-        if self._python is None:
-            self._python = PythonPage(driver=self.driver)
+    def _get_page(self, name):
+        if getattr(self, f"_{name}") is None:
+            setattr(self, f"_{name}", pages.get(name)(driver=self.driver))
 
-        return self._python
+        return getattr(self, f"_{name}")
