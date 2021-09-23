@@ -13,13 +13,15 @@ class PythonPage(BasePage):
 
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
-        self.lazy_init_complete = False
+
+        # if page is already opened (was opened not using the open method) - do lazy init
+        if self.url in self._driver.current_url:
+            self._lazy_init()
 
     def _lazy_init(self):
         if not self.lazy_init_complete:
             self._search_input = self.driver.find_element_by_name("q")
             self._submit_button = self.driver.find_element_by_xpath("/html/body/div[1]/ul/li[6]/div/form/input[2]")
-            self.lazy_init_complete = True
 
     @allure.step
     def open(self):
