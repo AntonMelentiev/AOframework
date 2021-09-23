@@ -3,7 +3,7 @@ import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-from framework.steps import Step
+from framework.base_test import Test
 from framework.utils import get_screenshot_name
 
 
@@ -28,7 +28,7 @@ def driver(request):
 
 
 @pytest.fixture
-def step(driver):
-    step = Step(driver=driver)
+def test(driver):
+    test = Test(driver=driver)
 
-    yield step
+    yield test
