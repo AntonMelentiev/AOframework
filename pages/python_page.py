@@ -32,7 +32,8 @@ class PythonPage(BasePage):
         self._search_input.send_keys(text)
         self._submit_button.submit()
         WebDriverWait(self.driver, self.timeout).until(
-            expected_conditions.text_to_be_present_in_element((By.XPATH, '//*[@id="search-results"]/h2'), "Search Results"))
+            expected_conditions.text_to_be_present_in_element((By.XPATH, '//*[@id="search-results"]/h2'),
+                                                              "Search Results"))
 
     @allure.step
     def get_text_after_search(self):
