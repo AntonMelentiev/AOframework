@@ -1,7 +1,7 @@
 import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pages.base_page import BasePage
@@ -52,5 +52,7 @@ class PythonPage(BasePage):
         return len(links)
 
     def _accept_policies(self):
-        WebDriverWait(self.driver, self.timeout).until(
-            ec.visibility_of_element_located((By.XPATH, "/html/body/div[1]/ul/li[6]/div/form/input[2]")))
+        accept_button = WebDriverWait(self.driver, self.timeout).until(
+            expected_conditions.visibility_of_element_located(
+                (By.XPATH, "/html/body/div[1]/ul/li[6]/div/form/input[2]")))
+        accept_button.click()
