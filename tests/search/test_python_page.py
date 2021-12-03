@@ -2,7 +2,7 @@ import pytest
 
 
 def test_python_search__text_input__text_from_input_in_results(test):
-    txt_to_search = test.test_data.get_python_text_to_search()
+    txt_to_search = test.test_data.python_text_to_search
 
     test.page.python.open()
     test.page.python.search_text(txt_to_search)

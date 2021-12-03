@@ -1,5 +1,5 @@
 def test_google_search__text_input__text_from_input_in_results(test):
-    txt_to_search = test.test_data.get_google_text_to_search()
+    txt_to_search = test.test_data.google_text_to_search
 
     test.page.google.open()
     test.page.google.search_text(txt_to_search)
