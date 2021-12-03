@@ -19,8 +19,8 @@ class PythonPage(BasePage):
     def _submit_button(self):
         return self.driver.find_element_by_xpath("/html/body/div[1]/ul/li[6]/div/form/input[2]")
 
-    def __init__(self, driver: WebDriver):
-        super().__init__(driver)
+    def __init__(self, _driver: WebDriver):
+        super().__init__(_driver)
 
     @allure.step
     def open(self):

@@ -19,8 +19,8 @@ class GooglePage(BasePage):
     def _submit_button(self):
         return self.driver.find_element_by_name("btnK")
 
-    def __init__(self, driver: WebDriver):
-        super().__init__(driver)
+    def __init__(self, _driver: WebDriver):
+        super().__init__(_driver)
 
     @allure.step
     def open(self):
