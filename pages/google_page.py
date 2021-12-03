@@ -1,7 +1,7 @@
 import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pages.base_page import BasePage
@@ -37,8 +37,6 @@ class GooglePage(BasePage):
         return self.driver.find_element_by_name("q").get_attribute("value")
 
     def accept_policies(self):
-        WebDriverWait(driver=self.driver, timeout=self.timeout).until(
-            expected_conditions.visibility_of_element_located((By.ID, "L2AGLb"))
-        )
+        WebDriverWait(self.driver, self.timeout).until(ec.visibility_of_element_located((By.ID, "L2AGLb")))
         accept_btn = self.driver.find_element_by_id("L2AGLb")
         accept_btn.click()

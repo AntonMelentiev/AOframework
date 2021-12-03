@@ -1,7 +1,7 @@
 import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pages.base_page import BasePage
@@ -25,23 +25,14 @@ class PythonPage(BasePage):
     @allure.step
     def open(self):
         self.driver.get(self.url)
-
-        # wait for accept policies popup and click accept
-        WebDriverWait(driver=self.driver, timeout=self.timeout).until(
-            expected_conditions.visibility_of_element_located(
-                (By.XPATH, "/html/body/div[1]/ul/li[6]/div/form/input[2]")
-            )
-        )
+        self._accept_policies()
 
     @allure.step
     def search_text(self, text: str):
         self._search_input.send_keys(text)
         self._submit_button.submit()
-        WebDriverWait(driver=self.driver, timeout=self.timeout).until(
-            expected_conditions.text_to_be_present_in_element(
-                locator=(By.XPATH, '//*[@id="search-results"]/h2'), text_="Search Results"
-            )
-        )
+        WebDriverWait(self.driver, self.timeout).until(
+            ec.text_to_be_present_in_element((By.XPATH, '//*[@id="search-results"]/h2'), "Search Results"))
 
     @allure.step
     def get_text_after_search(self):
@@ -59,3 +50,7 @@ class PythonPage(BasePage):
         results_list = self.driver.find_element_by_class_name("search")
         links = results_list.find_elements_by_tag_name("a")
         return len(links)
+
+    def _accept_policies(self):
+        WebDriverWait(self.driver, self.timeout).until(
+            ec.visibility_of_element_located((By.XPATH, "/html/body/div[1]/ul/li[6]/div/form/input[2]")))
