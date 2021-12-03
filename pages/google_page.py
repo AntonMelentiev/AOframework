@@ -11,29 +11,21 @@ class GooglePage(BasePage):
     url = "https://google.com"
     timeout = 15
 
-    def __init__(self, driver: WebDriver):
-        super().__init__(driver)
-        self.lazy_init_complete = False
+    @property
+    def _search_input(self):
+        return self.driver.find_element_by_name("q")
 
-    def _lazy_init(self):
-        if not self.lazy_init_complete:
-            self._search_input = self.driver.find_element_by_name("q")
-            self._submit_button = self.driver.find_element_by_name("btnK")
-            self.lazy_init_complete = True
+    @property
+    def _submit_button(self):
+        return self.driver.find_element_by_name("btnK")
+
+    def __init__(self, _driver: WebDriver):
+        super().__init__(_driver)
 
     @allure.step
     def open(self):
         self.driver.get(self.url)
-
-        # wait for accept policies popup and click accept
-        WebDriverWait(driver=self.driver, timeout=self.timeout).until(
-            expected_conditions.visibility_of_element_located((By.ID, "L2AGLb"))
-        )
-        accept_btn = self.driver.find_element_by_id("L2AGLb")
-        accept_btn.click()
-
-        # init elements to be used
-        self._lazy_init()
+        self.accept_policies()
 
     @allure.step
     def search_text(self, text: str):
@@ -43,3 +35,9 @@ class GooglePage(BasePage):
     @allure.step
     def get_text_after_search(self):
         return self.driver.find_element_by_name("q").get_attribute("value")
+
+    def accept_policies(self):
+        accept_btn = WebDriverWait(self.driver, self.timeout).until(
+            expected_conditions.visibility_of_element_located((By.ID, "L2AGLb"))
+        )
+        accept_btn.click()
