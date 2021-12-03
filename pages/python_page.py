@@ -11,17 +11,16 @@ class PythonPage(BasePage):
     url = "https://docs.python.org/3/"
     timeout = 10
 
+    @property
+    def _search_input(self):
+        return self.driver.find_element_by_name("q")
+
+    @property
+    def _submit_button(self):
+        return self.driver.find_element_by_xpath("/html/body/div[1]/ul/li[6]/div/form/input[2]")
+
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
-
-        # if page is already opened (was opened not using the open method) - do lazy init
-        if self.url in self._driver.current_url:
-            self._lazy_init()
-
-    def _lazy_init(self):
-        if not self.lazy_init_complete:
-            self._search_input = self.driver.find_element_by_name("q")
-            self._submit_button = self.driver.find_element_by_xpath("/html/body/div[1]/ul/li[6]/div/form/input[2]")
 
     @allure.step
     def open(self):
@@ -33,9 +32,6 @@ class PythonPage(BasePage):
                 (By.XPATH, "/html/body/div[1]/ul/li[6]/div/form/input[2]")
             )
         )
-
-        # init elements to be used
-        self._lazy_init()
 
     @allure.step
     def search_text(self, text: str):
