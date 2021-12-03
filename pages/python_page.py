@@ -32,8 +32,10 @@ class PythonPage(BasePage):
         self._search_input.send_keys(text)
         self._submit_button.submit()
         WebDriverWait(self.driver, self.timeout).until(
-            expected_conditions.text_to_be_present_in_element((By.XPATH, '//*[@id="search-results"]/h2'),
-                                                              "Search Results"))
+            expected_conditions.text_to_be_present_in_element(
+                (By.XPATH, '//*[@id="search-results"]/h2'), "Search Results"
+            )
+        )
 
     @allure.step
     def get_text_after_search(self):
@@ -55,5 +57,7 @@ class PythonPage(BasePage):
     def _accept_policies(self):
         accept_button = WebDriverWait(self.driver, self.timeout).until(
             expected_conditions.visibility_of_element_located(
-                (By.XPATH, "/html/body/div[1]/ul/li[6]/div/form/input[2]")))
+                (By.XPATH, "/html/body/div[1]/ul/li[6]/div/form/input[2]")
+            )
+        )
         accept_button.click()

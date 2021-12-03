@@ -38,5 +38,6 @@ class GooglePage(BasePage):
 
     def accept_policies(self):
         accept_btn = WebDriverWait(self.driver, self.timeout).until(
-            expected_conditions.visibility_of_element_located((By.ID, "L2AGLb")))
+            expected_conditions.visibility_of_element_located((By.ID, "L2AGLb"))
+        )
         accept_btn.click()
