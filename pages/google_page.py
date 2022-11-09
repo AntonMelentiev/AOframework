@@ -11,6 +11,9 @@ class GooglePage(BasePage):
     url = "https://google.com"
     timeout = 15
 
+    def __init__(self, driver: WebDriver):
+        super().__init__(driver)
+
     @property
     def _search_input(self):
         return self.driver.find_element_by_name("q")
@@ -19,13 +22,20 @@ class GooglePage(BasePage):
     def _submit_button(self):
         return self.driver.find_element_by_name("btnK")
 
-    def __init__(self, _driver: WebDriver):
-        super().__init__(_driver)
+    def _accept_policies(self):
+        accept_btn = WebDriverWait(self.driver, self.timeout).until(
+            expected_conditions.visibility_of_element_located((By.ID, "L2AGLb"))
+        )
+        accept_btn.click()
+
+    ####################################################################################################################
+    # Actions
+    ####################################################################################################################
 
     @allure.step
     def open(self):
         self.driver.get(self.url)
-        self.accept_policies()
+        self._accept_policies()
 
     @allure.step
     def search_text(self, text: str):
@@ -35,9 +45,3 @@ class GooglePage(BasePage):
     @allure.step
     def get_text_after_search(self):
         return self.driver.find_element_by_name("q").get_attribute("value")
-
-    def accept_policies(self):
-        accept_btn = WebDriverWait(self.driver, self.timeout).until(
-            expected_conditions.visibility_of_element_located((By.ID, "L2AGLb"))
-        )
-        accept_btn.click()

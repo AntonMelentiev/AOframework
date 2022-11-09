@@ -6,3 +6,6 @@ sandbox*
 
 # allure report
 allure/
+
+# poetry
+poetry.*
