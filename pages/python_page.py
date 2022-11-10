@@ -9,7 +9,7 @@ from pages.base_page import BasePage
 
 class PythonPage(BasePage):
     url = "https://docs.python.org/3/"
-    timeout = 10
+    timeout = 15
 
     def __init__(self, driver: WebDriver):
         super().__init__(driver)

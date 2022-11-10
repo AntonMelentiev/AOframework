@@ -1,9 +1,5 @@
 import pytest
 
-pytest_plugins = [
-    "{}_base".format(__name__),
-]
-
 
 # See http://doc.pytest.org/en/latest/example/simple.html#making-test-result-information-available-in-fixtures
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)

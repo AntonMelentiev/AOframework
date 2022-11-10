@@ -3,7 +3,7 @@ import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-from framework.base_test import T
+from framework import T
 from framework.utils import get_screenshot_name
 
 
