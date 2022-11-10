@@ -8,22 +8,22 @@ from pages.base_page import BasePage
 
 
 class GooglePage(BasePage):
-    url = "https://google.com"
-    timeout = 15
+    _url = "https://google.com"
+    _timeout = 15
 
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
 
     @property
     def _search_input(self):
-        return self.driver.find_element_by_name("q")
+        return self._driver.find_element_by_name("q")
 
     @property
     def _submit_button(self):
-        return self.driver.find_element_by_name("btnK")
+        return self._driver.find_element_by_name("btnK")
 
     def _accept_policies(self):
-        accept_btn = WebDriverWait(self.driver, self.timeout).until(
+        accept_btn = WebDriverWait(self._driver, self._timeout).until(
             expected_conditions.visibility_of_element_located((By.ID, "L2AGLb"))
         )
         accept_btn.click()
@@ -34,7 +34,7 @@ class GooglePage(BasePage):
 
     @allure.step
     def open(self):
-        self.driver.get(self.url)
+        self._driver.get(self._url)
         self._accept_policies()
 
     @allure.step
@@ -44,4 +44,4 @@ class GooglePage(BasePage):
 
     @allure.step
     def get_text_after_search(self):
-        return self.driver.find_element_by_name("q").get_attribute("value")
+        return self._driver.find_element_by_name("q").get_attribute("value")

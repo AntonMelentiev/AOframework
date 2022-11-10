@@ -15,7 +15,7 @@ class Page:
     python: PythonPage
 
     def __init__(self, driver: WebDriver):
-        self.driver = driver
+        self._driver = driver
 
         for page in pages:
             setattr(self.__class__, f"_{page}", None)
@@ -26,6 +26,6 @@ class Page:
 
     def _get_page(self, name):
         if getattr(self, f"_{name}") is None:
-            setattr(self, f"_{name}", pages.get(name)(driver=self.driver))
+            setattr(self, f"_{name}", pages.get(name)(driver=self._driver))
 
         return getattr(self, f"_{name}")

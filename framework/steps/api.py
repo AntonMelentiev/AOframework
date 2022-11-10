@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from typing import Dict, Any
 
+import allure
 from requests import Session, Request, Response, RequestException
 
 from framework.enums import HTTPMethod
@@ -39,6 +40,7 @@ class ApiStep:
     # Actions
     ####################################################################################################################
 
+    @allure.step
     def make_order(
         self,
         request_data: Dict[str, Any],
