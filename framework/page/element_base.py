@@ -8,7 +8,7 @@ from framework.page.locators import CSS, XPATH, CssType, Locator
 
 
 class ElementBase(BaseModel):
-    locator: Optional[Locator] = None
+    locator: Locator
     driver: Optional[WebDriver] = None
     el: Optional[WebElement] = None
 
