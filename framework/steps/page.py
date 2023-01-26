@@ -1,18 +1,23 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages.google_page import GooglePage
-from pages.python_page import PythonPage
-
+from pages.google_results.page import GoogleResultsPage
+from pages.google_search.page import GoogleSearchPage
+from pages.python_documentation.page import PythonDocumentationPage
+from pages.python_search.page import PythonSearchPage
 
 pages = {
-    "google": GooglePage,
-    "python": PythonPage,
+    "google_results": GoogleResultsPage,
+    "google_search": GoogleSearchPage,
+    "python_documentation": PythonDocumentationPage,
+    "python_search": PythonSearchPage,
 }
 
 
 class Page:
-    google: GooglePage
-    python: PythonPage
+    google_results: GoogleResultsPage
+    google_search: GoogleSearchPage
+    python_documentation: PythonDocumentationPage
+    python_search: PythonSearchPage
 
     def __init__(self, driver: WebDriver):
         self._driver = driver
