@@ -24,4 +24,4 @@ class Link(ElementBase):
 class SpanWithText(ElementBase):
     @property
     def text(self) -> str:
-        return self.el.get_inner_text()  # TODO: check if it's OK
+        return self.el.text

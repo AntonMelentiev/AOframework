@@ -6,6 +6,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from framework.page.locators import XPATH
 from framework.page.page_base import PageBase
 from pages.python_search.elements import PageElements
 from pages.python_search.elements import SearchResult
@@ -23,11 +24,9 @@ class PythonSearchPage(PageBase):
     @allure.step
     def open(self):
         self._driver.get(self._url)
-        # TODO: move to base element
-        WebDriverWait(self._driver, self._timeout).until(
-            expected_conditions.text_to_be_present_in_element(
-                (By.XPATH, '//*[@id="search-results"]/h2'), "Search Results"
-            )
+        self.elements.wait.text_to_be_present_in_element(
+            locator=XPATH(locator="//*[@id='search-results']/h2"),
+            text="Search Results"
         )
         self.elements.update_results(driver=self._driver)
 
@@ -35,11 +34,9 @@ class PythonSearchPage(PageBase):
     def search_text(self, text: str) -> None:
         self.elements.SEARCH_INPUT.fill(text)
         self.elements.SUBMIT_BUTTON.click()
-        # TODO: move to base element
-        WebDriverWait(self._driver, self._timeout).until(
-            expected_conditions.text_to_be_present_in_element(
-                (By.XPATH, '//*[@id="search-results"]/h2'), "Search Results"
-            )
+        self.elements.wait.text_to_be_present_in_element(
+            locator=XPATH(locator="//*[@id='search-results']/h2"),
+            text="Search Results"
         )
         self.elements.update_results(driver=self._driver)
 

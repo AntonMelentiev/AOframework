@@ -24,8 +24,8 @@ class PageElements(ElementContainer):
         self.SEARCH_RESULTS = []
         for i in range(1, len(results) + 1):
             obj = SearchResult(
-                LINK=Link(locator=XPATH(locator=f"//li[a and span][{i}]/a")),
-                TEXT=SpanWithText(locator=XPATH(locator=f"//li[a and span][{i}]/span")),
+                LINK=Link(locator=XPATH(locator=f"//li[a and span or p][{i}]/a")),
+                TEXT=SpanWithText(locator=XPATH(locator=f"//li[a and span or p][{i}]/*[2]")),
             )
             obj._set(driver=driver)
             self.SEARCH_RESULTS.append(obj)
