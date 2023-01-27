@@ -1,10 +1,7 @@
 from typing import Union
 
 import allure
-from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
 
 from framework.page.locators import XPATH
 from framework.page.page_base import PageBase
@@ -25,8 +22,7 @@ class PythonSearchPage(PageBase):
     def open(self):
         self._driver.get(self._url)
         self._wait.text_to_be_present_in_element(
-            locator=XPATH(locator="//*[@id='search-results']/h2"),
-            text="Search Results"
+            locator=XPATH(locator="//*[@id='search-results']/h2"), text="Search Results"
         )
         self.elements.update_results(driver=self._driver)
 
@@ -35,8 +31,7 @@ class PythonSearchPage(PageBase):
         self.elements.SEARCH_INPUT.fill(text)
         self.elements.SUBMIT_BUTTON.click()
         self._wait.text_to_be_present_in_element(
-            locator=XPATH(locator="//*[@id='search-results']/h2"),
-            text="Search Results"
+            locator=XPATH(locator="//*[@id='search-results']/h2"), text="Search Results"
         )
         self.elements.update_results(driver=self._driver)
 

@@ -25,7 +25,7 @@ def test_python_page__text_input__first_result_link_correct(t):
         ("builtin", 80),
         ("adsfadsfdasfasdf", 0),
     ],
-    ids=["search builtin", "search abstract text"]
+    ids=["search builtin", "search abstract text"],
 )
 def test_python_page__text_input__number_of_results_correspond_to_text(t, txt_to_search, expected_results_num):
     t.step.page.python_documentation.open()

@@ -1,6 +1,6 @@
 from framework.page.element_container import ElementContainer
 from framework.page.elements import Button, TextInput
-from framework.page.locators import CSS, CssType, XPATH
+from framework.page.locators import XPATH
 
 
 class PageElements(ElementContainer):
