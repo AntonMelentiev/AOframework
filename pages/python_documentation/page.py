@@ -12,7 +12,7 @@ class PythonDocumentationPage(PageBase):
     @allure.step
     def open(self):
         self._driver.get(self._url)
-        self._wait.visibility_of_element_located(locator=XPATH(locator="html/body/div[2]/ul/li[9]/div/form/input[1]"))
+        self._wait.visibility_of_element_located(locator=self.elements.SEARCH_INPUT.locator)
 
     @allure.step
     def search_text(self, text: str):
