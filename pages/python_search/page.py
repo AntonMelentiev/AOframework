@@ -24,7 +24,7 @@ class PythonSearchPage(PageBase):
     @allure.step
     def open(self):
         self._driver.get(self._url)
-        self.elements.wait.text_to_be_present_in_element(
+        self._wait.text_to_be_present_in_element(
             locator=XPATH(locator="//*[@id='search-results']/h2"),
             text="Search Results"
         )
@@ -34,7 +34,7 @@ class PythonSearchPage(PageBase):
     def search_text(self, text: str) -> None:
         self.elements.SEARCH_INPUT.fill(text)
         self.elements.SUBMIT_BUTTON.click()
-        self.elements.wait.text_to_be_present_in_element(
+        self._wait.text_to_be_present_in_element(
             locator=XPATH(locator="//*[@id='search-results']/h2"),
             text="Search Results"
         )

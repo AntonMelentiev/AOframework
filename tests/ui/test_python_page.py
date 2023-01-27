@@ -5,7 +5,8 @@ def test_python_search__text_input__text_from_input_in_results(t):
     t.step.page.python_documentation.open()
     t.step.page.python_documentation.search_text(t.data.python_text_to_search)
 
-    t.step.check.equality(t.data.python_text_to_search, t.step.page.python_search.elements.SEARCH_INPUT.value)
+    actual_search_value = t.step.page.python_search.elements.SEARCH_INPUT.value
+    t.step.check.equality(t.data.python_text_to_search, actual_search_value)
 
 
 def test_python_page__text_input__first_result_link_correct(t):
