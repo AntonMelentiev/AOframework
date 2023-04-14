@@ -1,31 +1,31 @@
 from typing import List
 
-from selenium.webdriver.remote.webdriver import WebDriver
+from playwright.sync_api import Page
 
-from framework.page.element_container import ElementContainer
-from framework.page.elements import Button, TextInput, Link, SpanWithText
-from framework.page.locators import CSS, CssType, XPATH
+from framework.page.page_element import PageElement
+from framework.page.page_elements_container import ElementContainer
 
 
 class SearchResult(ElementContainer):
-    LINK: Link
-    TEXT: SpanWithText
+    LINK: PageElement
+    TEXT: PageElement
 
 
 class PageElements(ElementContainer):
-    SEARCH_INPUT: TextInput = TextInput(locator=CSS(type=CssType.NAME, locator="q"))
+    SEARCH_INPUT: PageElement = PageElement(selector='[name="q"]')
+    SEARCH_RESULT_TITLE: PageElement = PageElement(selector="//*[@id='search-results']/h2")
     SEARCH_RESULTS: List[SearchResult] = []
-    SUBMIT_BUTTON: Button = Button(locator=XPATH(locator="/html/body/div[3]/div[1]/div/div/form/input[2]"))
+    SUBMIT_BUTTON: PageElement = PageElement(selector="/html/body/div[2]/ul/li[9]/div/form/input[2]")
 
-    def update_results(self, driver: WebDriver):
-        results_list = driver.find_element_by_class_name("search")
-        results = results_list.find_elements_by_tag_name("li")
+    def update_results(self, page: Page):
+        results_list = page.locator(selector=".search")
+        results = results_list.locator("li").all()
 
         self.SEARCH_RESULTS = []
         for i in range(1, len(results) + 1):
             obj = SearchResult(
-                LINK=Link(locator=XPATH(locator=f"//li[a and span or p][{i}]/a")),
-                TEXT=SpanWithText(locator=XPATH(locator=f"//li[a and span or p][{i}]/*[2]")),
+                LINK=PageElement(selector=f"//li[a and span or p][{i}]/a"),
+                TEXT=PageElement(selector=f"//li[a and span or p][{i}]/*[2]"),
             )
-            obj._set(driver=driver)
+            obj._set(page=page)
             self.SEARCH_RESULTS.append(obj)

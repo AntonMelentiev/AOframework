@@ -1,8 +1,8 @@
-from framework.page.element_container import ElementContainer
-from framework.page.elements import Button, TextInput
-from framework.page.locators import CSS, CssType
+from framework.page.page_element import PageElement
+from framework.page.page_elements_container import ElementContainer
 
 
 class PageElements(ElementContainer):
-    SEARCH_INPUT: TextInput = TextInput(locator=CSS(type=CssType.NAME, locator="q"))
-    SUBMIT_BUTTON: Button = Button(locator=CSS(type=CssType.NAME_WITH_NON_ZERO_SIZE, locator="btnK"))
+    SEARCH_INPUT: PageElement = PageElement(selector='textarea[name="q"]')
+    SUBMIT_BUTTON: PageElement = PageElement(selector='input[name="btnK"]')
+    ACCEPT_POLICIES_BUTTON: PageElement = PageElement(selector="#L2AGLb")

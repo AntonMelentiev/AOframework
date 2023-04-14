@@ -4,14 +4,15 @@ from typing import Dict, Any
 import allure
 from requests import Session, Request, Response, RequestException
 
-from framework.enums import HTTPMethod
+from framework.utils.enums import HTTPMethod
+from framework.utils.singletone import Singleton
 
 
 class UnexpectedStatusCode(RequestException):
     pass
 
 
-class ApiStep:
+class ApiStep(metaclass=Singleton):
     def __init__(self, base_api_url: str):
         self._session = None
         self._base_api_url = base_api_url

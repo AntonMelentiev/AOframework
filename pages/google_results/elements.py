@@ -1,7 +1,6 @@
-from framework.page.element_container import ElementContainer
-from framework.page.elements import TextInput
-from framework.page.locators import CSS, CssType
+from framework.page.page_element import PageElement
+from framework.page.page_elements_container import ElementContainer
 
 
 class PageElements(ElementContainer):
-    SEARCH_INPUT: TextInput = TextInput(locator=CSS(type=CssType.NAME, locator="q"))
+    SEARCH_INPUT: PageElement = PageElement(selector='textarea[name="q"]')

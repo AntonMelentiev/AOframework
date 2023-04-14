@@ -1,11 +1,12 @@
 .idea
 .venv
 
-# tmp files
-sandbox*
-
 # allure report
-allure/
+allure-results
+allure-report
 
 # poetry
 poetry.*
+
+# tmp files
+sandbox*

@@ -1,9 +1,8 @@
 from typing import Union
 
 import allure
-from selenium.webdriver.remote.webdriver import WebDriver
+from playwright.sync_api import Page
 
-from framework.page.locators import XPATH
 from framework.page.page_base import PageBase
 from pages.python_search.elements import PageElements
 from pages.python_search.elements import SearchResult
@@ -11,29 +10,24 @@ from pages.python_search.elements import SearchResult
 
 class PythonSearchPage(PageBase):
     _url = "https://docs.python.org/3/search.html"
-    _timeout = 15
     elements: PageElements = PageElements()
 
-    def __init__(self, driver: WebDriver):
-        super().__init__(driver=driver)
-        self.elements.update_results(driver=driver)
+    def __init__(self, page: Page):
+        super().__init__(page=page)
+        self.elements.update_results(page=page)
 
     @allure.step
     def open(self):
-        self._driver.get(self._url)
-        self._wait.text_to_be_present_in_element(
-            locator=XPATH(locator="//*[@id='search-results']/h2"), text="Search Results"
-        )
-        self.elements.update_results(driver=self._driver)
+        self._page.goto(self._url)
+        self._page.wait_for_selector(f"{self.elements.SEARCH_RESULT_TITLE.selector} >> text=Search Results")
+        self.elements.update_results(page=self._page)
 
     @allure.step
     def search_text(self, text: str) -> None:
-        self.elements.SEARCH_INPUT.fill(text)
-        self.elements.SUBMIT_BUTTON.click()
-        self._wait.text_to_be_present_in_element(
-            locator=XPATH(locator="//*[@id='search-results']/h2"), text="Search Results"
-        )
-        self.elements.update_results(driver=self._driver)
+        self.elements.SEARCH_INPUT.locator.fill(text)
+        self.elements.SUBMIT_BUTTON.locator.click()
+        self._page.wait_for_selector(self.elements.SEARCH_RESULT_TITLE.selector, state="visible")
+        self.elements.update_results(page=self._page)
 
     @allure.step
     def get_first_search_result(self) -> Union[None, SearchResult]:

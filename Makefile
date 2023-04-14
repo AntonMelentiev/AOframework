@@ -8,7 +8,8 @@ PYTHON_MINIMAL_VERSION = 3.8
 
 # Paths
 CUR_PATH = $(shell pwd)
-ALLURE_PATH = $(CUR_PATH)/allure_report
+ALLURE_RESULTS_PATH = $(CUR_PATH)/allure-results
+ALLURE_GENERATED_REPORT_PATH = $(CUR_PATH)/allure-report
 VIRTUAL_ENV ?= $(CUR_PATH)/.venv
 VENV_ACTIVATE = $(VIRTUAL_ENV)/bin/activate
 
@@ -25,8 +26,6 @@ SHELL = /bin/bash
 
 # Update PATH to work via virtual environment
 export PATH := $(VIRTUAL_ENV)/bin:$(PATH)
-
-all: help
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -48,32 +47,34 @@ help: Makefile
 # Targets
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-## install              : Install requirements
+## install                   : Install requirements
 install: $(VENV_ACTIVATE)
 	pip install poetry
 	poetry config virtualenvs.create false
 	poetry install
+	playwright install
 
 
-## test                 : Run pytest
-test: clear-allure-report
+## test                      : Run pytest
+test:
 	pytest tests --alluredir=$(ALLURE_PATH) -p no:cacheprovider
 
-## allure-report        : Generate and open HTML allure report in GoogleChrome
+## generate-allure-report    : Generate and open HTML allure report in GoogleChrome
+generate-allure-report:
+	mkdir -p $(ALLURE_GENERATED_REPORT_PATH)
+	if [ -d $(ALLURE_GENERATED_REPORT_PATH)/history ]; then cp -r $(ALLURE_GENERATED_REPORT_PATH)/history $(ALLURE_GENERATED_REPORT_PATH); fi
+	allure generate $(ALLURE_RESULTS_PATH) --report-dir $(ALLURE_GENERATED_REPORT_PATH)/html
+
+## allure-report             : Open allure report
 allure-report:
-	allure generate $(ALLURE_PATH) --report-dir $(ALLURE_PATH)/html
-	google-chrome --disable-web-security --user-data-dir="$(ALLURE_PATH)/chrome_files" $(ALLURE_PATH)/html/index.html
+	google-chrome --disable-web-security --user-data-dir="$(ALLURE_GENERATED_REPORT_PATH)/chrome_files" $(ALLURE_GENERATED_REPORT_PATH)/html/index.html
 
-## clear-allure-report  : Remove all files form ./allure_report folder
-clear-allure-report:
-	rm -rf $(ALLURE_PATH)/*
-
-## black                : Style code with Black
+## black                     : Style code with Black
 black:
 	cd $(CUR_PATH) && black . --line-length 120
 
 
-## black-diff           : Show code style diff with colored diff
+## black-diff                : Show code style diff with colored diff
 black-diff:
 	cd $(CUR_PATH) && black . --line-length 120 --diff --color
 

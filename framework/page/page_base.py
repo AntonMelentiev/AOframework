@@ -1,15 +1,13 @@
-from selenium.webdriver.remote.webdriver import WebDriver
+from playwright.sync_api import Page
 
-from framework.page.element_container import ElementContainer
-from framework.page.waiter import Waiter
+from framework.page.page_elements_container import ElementContainer
 
 
 class PageBase:
-    def __init__(self, driver: WebDriver):
-        self._driver = driver
-        self._wait = Waiter(driver=self._driver)
-
-        self.elements._set(driver=self._driver)
+    def __init__(self, page: Page):
+        self._page = page
+        # set elements
+        self.elements._set(page=self._page)
 
     @property
     def _url(self) -> str:
@@ -20,4 +18,4 @@ class PageBase:
         raise NotImplementedError
 
     def open(self) -> None:
-        self._driver.get(self._url)
+        self._page.goto(self._url)
