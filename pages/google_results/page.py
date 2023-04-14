@@ -10,4 +10,4 @@ class GoogleResultsPage(PageBase):
 
     @allure.step
     def get_text_after_search(self) -> str:
-        return self.elements.SEARCH_INPUT.locator.input_value()
+        return self.elements.SEARCH_INPUT.input_value()

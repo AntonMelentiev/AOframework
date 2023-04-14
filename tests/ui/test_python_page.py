@@ -7,7 +7,7 @@ def test_python_search__text_input__text_from_input_in_results(t):
     t.step.page.python_documentation.open()
     t.step.page.python_documentation.search_text(expected_txt)
 
-    actual_search_value = t.step.page.python_search.elements.SEARCH_INPUT.locator.input_value()
+    actual_search_value = t.step.page.python_search.elements.SEARCH_INPUT.input_value()
     t.check.equality(expected_txt, actual_search_value)
 
 
@@ -19,7 +19,7 @@ def test_python_page__text_input__first_result_link_correct(t):
     t.step.page.python_documentation.search_text(expected_txt)
 
     first_result = t.step.page.python_search.get_first_search_result()
-    first_link = first_result.LINK.locator.url
+    first_link = first_result.LINK.url
     t.check.equality(first_link, expected_link)
 
 

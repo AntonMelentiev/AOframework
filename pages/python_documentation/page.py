@@ -15,7 +15,7 @@ class PythonDocumentationPage(PageBase):
 
     @allure.step
     def search_text(self, text: str):
-        self.elements.SEARCH_INPUT.locator.fill(text)
-        self.elements.SUBMIT_BUTTON.locator.click()
+        self.elements.SEARCH_INPUT.fill(text)
+        self.elements.SUBMIT_BUTTON.click()
         self._page.wait_for_selector(f"{self.elements.SEARCH_RESULT_TITLE.selector} >> text=Search Results")
 

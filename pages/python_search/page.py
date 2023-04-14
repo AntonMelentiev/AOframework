@@ -24,8 +24,8 @@ class PythonSearchPage(PageBase):
 
     @allure.step
     def search_text(self, text: str) -> None:
-        self.elements.SEARCH_INPUT.locator.fill(text)
-        self.elements.SUBMIT_BUTTON.locator.click()
+        self.elements.SEARCH_INPUT.fill(text)
+        self.elements.SUBMIT_BUTTON.click()
         self._page.wait_for_selector(self.elements.SEARCH_RESULT_TITLE.selector, state="visible")
         self.elements.update_results(page=self._page)
 

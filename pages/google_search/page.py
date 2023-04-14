@@ -10,7 +10,7 @@ class GoogleSearchPage(PageBase):
 
     def _accept_policies(self):
         self._page.wait_for_selector(self.elements.ACCEPT_POLICIES_BUTTON.selector, state="attached")
-        self.elements.ACCEPT_POLICIES_BUTTON.locator.click()
+        self.elements.ACCEPT_POLICIES_BUTTON.click()
 
     @allure.step
     def open(self):
@@ -21,9 +21,9 @@ class GoogleSearchPage(PageBase):
     def search_text(self, text: str):
         self._page.wait_for_timeout(timeout=250)
         # self._page.wait_for_selector(self.elements.SEARCH_INPUT.selector, state="attached", timeout=3000)
-        self.elements.SEARCH_INPUT.locator.fill(text)
-        self.elements.SUBMIT_BUTTON.locator.all()[0].click(timeout=1000)
+        self.elements.SEARCH_INPUT.fill(text)
+        self.elements.SUBMIT_BUTTON.all()[0].click(timeout=1000)
 
     @allure.step
     def get_text_after_search(self):
-        return self.elements.SEARCH_INPUT.locator.input_value()
+        return self.elements.SEARCH_INPUT.input_value()
