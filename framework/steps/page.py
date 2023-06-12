@@ -1,13 +1,12 @@
 from playwright.sync_api import Browser
 
-from framework.utils.singletone import Singleton
 from pages.google_results.page import GoogleResultsPage
 from pages.google_search.page import GoogleSearchPage
 from pages.python_documentation.page import PythonDocumentationPage
 from pages.python_search.page import PythonSearchPage
 
 
-class PageStep(metaclass=Singleton):
+class PageStep:
     google_results: GoogleResultsPage
     google_search: GoogleSearchPage
     python_documentation: PythonDocumentationPage

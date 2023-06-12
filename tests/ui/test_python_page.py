@@ -13,13 +13,13 @@ def test_python_search__text_input__text_from_input_in_results(t):
 
 def test_python_page__text_input__first_result_link_correct(t):
     expected_txt = t.data.python_text_to_search
-    expected_link = "https://docs.python.org/3/library/builtins.html?highlight=builtin#module-builtins"
+    expected_link = "library/builtins.html?highlight=builtin#module-builtins"
 
     t.step.page.python_documentation.open()
     t.step.page.python_documentation.search_text(expected_txt)
 
     first_result = t.step.page.python_search.get_first_search_result()
-    first_link = first_result.LINK.url
+    first_link = first_result.LINK.get_attribute("href")
     t.check.equality(first_link, expected_link)
 
 
