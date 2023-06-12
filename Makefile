@@ -57,7 +57,7 @@ install: $(VENV_ACTIVATE)
 
 ## test                      : Run pytest
 test:
-	pytest tests --alluredir=$(ALLURE_PATH) -p no:cacheprovider
+	pytest tests --alluredir=$(ALLURE_RESULTS_PATH) -p no:cacheprovider
 
 ## generate-allure-report    : Generate and open HTML allure report in GoogleChrome
 generate-allure-report:
@@ -66,6 +66,7 @@ generate-allure-report:
 	allure generate $(ALLURE_RESULTS_PATH) --report-dir $(ALLURE_GENERATED_REPORT_PATH)/html
 
 ## allure-report             : Open allure report
+.PHONY: allure-report
 allure-report:
 	google-chrome --disable-web-security --user-data-dir="$(ALLURE_GENERATED_REPORT_PATH)/chrome_files" $(ALLURE_GENERATED_REPORT_PATH)/html/index.html
 
