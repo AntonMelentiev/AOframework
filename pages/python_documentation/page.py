@@ -18,4 +18,3 @@ class PythonDocumentationPage(PageBase):
         self.elements.SEARCH_INPUT.fill(text)
         self.elements.SUBMIT_BUTTON.click()
         self._page.wait_for_selector(f"{self.elements.SEARCH_RESULT_TITLE.selector} >> text=Search Results")
-

@@ -28,6 +28,7 @@ class PageElement(BaseModel):
 
 # Help for PyCharm
 if TYPE_CHECKING:
+
     class PageElement(BaseModel, Locator):
         def __init__(self, selector: str, page: Optional[Page]):
             ...
