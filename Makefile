@@ -49,9 +49,11 @@ help: Makefile
 
 ## install                   : Install requirements
 install: $(VENV_ACTIVATE)
-	pip install poetry
-	poetry config virtualenvs.create false
-	poetry install
+	@echo Instalation start
+	python3 -m venv $(VIRTUAL_ENV)  &&\
+	pip install poetry  &&\
+	poetry config virtualenvs.create false  &&\
+	poetry install  &&\
 	playwright install
 
 
